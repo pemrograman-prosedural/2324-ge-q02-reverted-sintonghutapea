@@ -78,19 +78,22 @@ strcpy(type2,"female|unassigned" );
     }
 }
 
-void assign_student(struct student_t *_student, struct dorm_t *_dorm, int student_count, int dorm_count, char *id, char *dorm_name){
-    for (int i = 0; i<student_count; i++){
-        if(strcmp(_student[i].id, id)==0){
-            for(int j = 0;  j < dorm_count; j++){
-                if (strcmp(_dorm[j].name, dorm_name)==0 && _dorm[j].residents_num<_dorm[j].capacity && _student[i].gender == _dorm[j].gender){
-                    _student[i].gender = &_dorm[j];
-                    _dorm[j].residents_num++;
+
+void assign_student(struct student_t *students, struct dorm_t *dormitories, int student_count, int dormitory_count, char *id, char *dorm_name) {
+    for (int i = 0; i < student_count; i++) {
+        if (strcmp(students[i].id, id) == 0) {
+            for (int j = 0; j < dormitory_count; j++) {
+                if (strcmp(dormitories[j].name, dorm_name) == 0 && dormitories[j].residents_num < dormitories[j].capacity &&
+                    students[i].gender == dormitories[j].gender) {
+                    students[i].dorm = &dormitories[j];
+                    dormitories[j].residents_num++;
                     return;
                 }
             }
         }
     }
 }
+
 void move_student(struct student_t *_student, struct dorm_t *_dorm, struct dorm_t *old_dorm, char *id, char *dorm_name)
 {
     if (_dorm->residents_num < _dorm->capacity)
@@ -105,29 +108,10 @@ void move_student(struct student_t *_student, struct dorm_t *_dorm, struct dorm_
 }
 
 
-void dorm_empty(struct student_t *students, struct dorm_t *dorms, int std){
-
-    for (int i = 0; i < std; i++){
-        if (students[i].dorm==NULL){
-            continue;
-        } else if(strcmp(students[i].dorm->name, dorms->name)==0){
+void empty_dorm(struct student_t *students, int student_count, char *dorm_name) {
+    for (int i = 0; i < student_count; i++) {
+        if (students[i].dorm != NULL && strcmp(students[i].dorm->name, dorm_name) == 0) {
             students[i].dorm = NULL;
         }
     }
-    
-    dorms->residents_num = 0;
-}
-
-
-void dorm_empty(struct student_t *students, struct dorm_t *dorms, int std){
-
-    for (int i = 0; i < std; i++){
-        if (students[i].dorm==NULL){
-            continue;
-        } else if(strcmp(students[i].dorm->name, dorms->name)==0){
-            students[i].dorm = NULL;
-        }
-    }
-    
-    dorms->residents_num = 0;
 }

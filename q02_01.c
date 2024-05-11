@@ -36,17 +36,16 @@ int main(int argc, char **argv) {
                 enum gender_t gender;
                 if (strcmp(gender_str, "male\n") == 0) {
                     gender = GENDER_MALE;
-                } else if (strcmp(gender_str, "female\n") == 0){
+                } else if (strcmp(gender_str, "female\n") == 0) {
                     gender = GENDER_FEMALE;
                 }
                 students[student_count] = create_student(id, name, year, gender);
                 student_count++;
-            } else if(strcmp(token, "assign-student")==0){
+            } else if (strcmp(token, "assign-student") == 0) {
                 char *id = strtok(NULL, "#");
                 char *dorm_name = strtok(NULL, "#");
                 assign_student(students, dormitories, student_count, dormitory_count, id, dorm_name);
-            } 
-            else if (strcmp(token, "dorm-add") == 0) {
+            } else if (strcmp(token, "dorm-add") == 0) {
                 char *name = strtok(NULL, "#");
                 char *capacity_str = strtok(NULL, "#");
                 char *gender_str = strtok(NULL, "#");
@@ -62,6 +61,10 @@ int main(int argc, char **argv) {
 
                 dormitories = realloc(dormitories, dormitory_count * sizeof(struct dorm_t));
                 dormitories[dormitory_count - 1] = new_dorm;
+            } else if (strcmp(token, "empty-dorm") == 0) {
+                char *id = strtok(NULL, "#");
+                char *dorm_name = strtok(NULL, "#");
+                empty_dorm(students, student_count, dorm_name);
             }
         }
     }
