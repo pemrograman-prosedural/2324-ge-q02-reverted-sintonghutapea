@@ -32,29 +32,34 @@ void print_dorm(struct dorm_t *_dorm, int count)
             printf("%s|%d%s\n", _dorm[i].name, _dorm[i].capacity, tipee);
         }
     }
+} 
+void empty_dorm(struct dorm_t *dormitories, int dormitory_count, char *dorm_name)
+{
+    for (int i = 0; i < dormitory_count; i++)
+    {
+        if (strcmp(dormitories[i].name, dorm_name) == 0)
+        {
+            for (int j = 0; j < dormitories[i].residents_num; j++)
+            {
+                dormitories[i].students[j].status = unassigned;
+            }
+            dormitories[i].residents_num = 0; // Reset residents_num
+            return;
+        }
+    }
 }
 
-
-void print_dorm_detail(struct dorm_t *_dorm,int count )
+void print_dorm_detail(struct dorm_t *_dorm, int count)
 {
-    char type1[50];
-    strcpy(type1, "male");
-    char type2[50];
-    strcpy(type2, "female");
-
-    int i = 0;
-    while (i < count)
+    for (int i = 0; i < count; i++)
     {
-
         if (_dorm[i].gender == GENDER_MALE)
         {
-            printf("%s|%d|%s|%d\n", _dorm[i].name, _dorm[i].capacity, type1, _dorm[i].residents_num);
+            printf("%s|%d|male|%d\n", _dorm[i].name, _dorm[i].capacity, _dorm[i].residents_num);
         }
         else if (_dorm[i].gender == GENDER_FEMALE)
         {
-            printf("%s|%d|%s|%d\n", _dorm[i].name, _dorm[i].capacity, type2, _dorm[i].residents_num);
+            printf("%s|%d|female|%d\n", _dorm[i].name, _dorm[i].capacity, _dorm[i].residents_num);
         }
-
-        i++;
     }
 }

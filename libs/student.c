@@ -10,8 +10,7 @@ struct student_t create_student(char *_id, char *_name, char *_year, enum gender
     strcpy(student.name, _name);
     strcpy(student.year, _year);
     student.gender = _gender;
-    student.dorm = malloc(sizeof(struct dorm_t));
-    student.dorm = NULL;
+    student.status = UNASSIGNED;
     return student;
 }
 
@@ -78,40 +77,4 @@ strcpy(type2,"female|unassigned" );
     }
 }
 
-
-void assign_student(struct student_t *students, struct dorm_t *dormitories, int student_count, int dormitory_count, char *id, char *dorm_name) {
-    for (int i = 0; i < student_count; i++) {
-        if (strcmp(students[i].id, id) == 0) {
-            for (int j = 0; j < dormitory_count; j++) {
-                if (strcmp(dormitories[j].name, dorm_name) == 0 && dormitories[j].residents_num < dormitories[j].capacity &&
-                    students[i].gender == dormitories[j].gender) {
-                    students[i].dorm = &dormitories[j];
-                    dormitories[j].residents_num++;
-                    return;
-                }
-            }
-        }
-    }
-}
-
-void move_student(struct student_t *_student, struct dorm_t *_dorm, struct dorm_t *old_dorm, char *id, char *dorm_name)
-{
-    if (_dorm->residents_num < _dorm->capacity)
-    {
-        if (_student->gender == _dorm->gender)
-        {
-            _student->dorm = _dorm;
-            _dorm->residents_num++;
-            old_dorm->residents_num=old_dorm->residents_num-1;
-        }
-    }
-}
-
-
-void empty_dorm(struct student_t *students, int student_count, char *dorm_name) {
-    for (int i = 0; i < student_count; i++) {
-        if (students[i].dorm != NULL && strcmp(students[i].dorm->name, dorm_name) == 0) {
-            students[i].dorm = NULL;
-        }
-    }
-}
+ 
