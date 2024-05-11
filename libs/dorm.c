@@ -41,9 +41,9 @@ void empty_dorm(struct dorm_t *dormitories, int dormitory_count, char *dorm_name
         {
             for (int j = 0; j < dormitories[i].residents_num; j++)
             {
-                dormitories[i].students[j].status = unassigned;
+                dormitories[i] student[j].status = UNASSIGNED;
             }
-            dormitories[i].residents_num = 0; // Reset residents_num
+            dormitories[i].residents_num = 0;
             return;
         }
     }
